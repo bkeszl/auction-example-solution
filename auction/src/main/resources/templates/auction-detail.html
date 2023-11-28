@@ -6,7 +6,8 @@
 </head>
 <body>
     <h1 th:text="${auction.getName()}"></h1>
-    <p th:text="'Current highest bid: ' + ${highestBid.getAmount()}"> </p>
+    <p th:if="${highestBid != null}" th:text="'Current highest bid: ' + ${highestBid.getAmount()}"> </p>
+    <p th:unless="${highestBid != null}" th:text="'No bids'"> </p>
     <h2>Bid</h2>
     <form action="/bid" method="post">
         <label for="name">

@@ -16,23 +16,31 @@ import java.util.List;
 public class HomeController {
     private AuctionItemService auctionItemService;
     private BidService bidService;
+
     @Autowired
     public HomeController(AuctionItemService auctionItemService, BidService bidService) {
         this.auctionItemService = auctionItemService;
         this.bidService = bidService;
     }
+
     @GetMapping("/")
-    public String getHome(Model model){
+    public String getHome(Model model) {
         List<AuctionItem> auctionItems = auctionItemService.findAll();
         model.addAttribute("auctions", auctionItems);
         return "home";
     }
 
     @GetMapping("/auctions/{id}")
-    public String getAuctionDetails(Model model, @PathVariable Long id){
+    public String getAuctionDetails(Model model, @PathVariable Long id) {
         AuctionItem auctionItem = auctionItemService.findById(id);
-        model.addAttribute("auction", auctionItem);
+
+        if (auctionItem == null) {
+            model.addAttribute("message", "No such auction!");
+            return "auction-error";
+        }
+
         Bid highestBid = bidService.findHighestBidByAuction(auctionItem);
+        model.addAttribute("auction", auctionItem);
         model.addAttribute("highestBid", highestBid);
         return "auction-detail";
     }
