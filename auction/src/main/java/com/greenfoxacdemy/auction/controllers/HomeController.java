@@ -44,6 +44,4 @@ public class HomeController {
         model.addAttribute("highestBid", highestBid);
         return "auction-detail";
     }
-
-
 }

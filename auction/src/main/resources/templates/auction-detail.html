@@ -9,16 +9,17 @@
     <p th:if="${highestBid != null}" th:text="'Current highest bid: ' + ${highestBid.getAmount()}"> </p>
     <p th:unless="${highestBid != null}" th:text="'No bids'"> </p>
     <h2>Bid</h2>
+    <p th:if="${message != null}" th:text="${message}"></p>
     <form action="/bid" method="post">
         <label for="name">
             Name
         </label>
-        <input type="text" name="bidderName" id="name">
+        <input type="text" th:value="${bidderName != null ? bidderName : '' }" name="bidderName" id="name">
         <label for="amount">
             Amount
         </label>
         <input type="hidden" name="auctionItemId" th:value="${auction.getId()}">
-        <input type="number" name="amount" id="amount">
+        <input type="number" th:value="${previousAmount != null ? previousAmount : '' }" name="amount" id="amount">
         <input type="submit" value="Bid">
     </form>
 </body>
