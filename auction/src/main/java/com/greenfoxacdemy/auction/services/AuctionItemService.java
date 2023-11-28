@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuctionItemService {
@@ -17,6 +18,11 @@ public class AuctionItemService {
 
     public List<AuctionItem> findAll() {
         return auctionItemRepository.findAll();
+    }
+
+    public AuctionItem findById(Long id) {
+        Optional<AuctionItem> oItem = auctionItemRepository.findById(id);
+        return oItem.orElse(null);
     }
 }
 

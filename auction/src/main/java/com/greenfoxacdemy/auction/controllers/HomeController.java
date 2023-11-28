@@ -1,12 +1,14 @@
 package com.greenfoxacdemy.auction.controllers;
 
 import com.greenfoxacdemy.auction.models.AuctionItem;
+import com.greenfoxacdemy.auction.models.Bid;
 import com.greenfoxacdemy.auction.services.AuctionItemService;
 import com.greenfoxacdemy.auction.services.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -25,5 +27,15 @@ public class HomeController {
         model.addAttribute("auctions", auctionItems);
         return "home";
     }
+
+    @GetMapping("/auctions/{id}")
+    public String getAuctionDetails(Model model, @PathVariable Long id){
+        AuctionItem auctionItem = auctionItemService.findById(id);
+        model.addAttribute("auction", auctionItem);
+        Bid highestBid = bidService.findHighestBidByAuction(auctionItem);
+        model.addAttribute("highestBid", highestBid);
+        return "auction-detail";
+    }
+
 
 }

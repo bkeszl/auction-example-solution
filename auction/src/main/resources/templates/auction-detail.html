@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="${auction.getName()}"></h1>
+    <p th:text="'Current highest bid: ' + ${highestBid.getAmount()}"> </p>
+    <h2>Bid</h2>
+    <form action="/bid" method="post">
+        <label for="name">
+            Name
+        </label>
+        <input type="text" name="bidderName" id="name">
+        <label for="amount">
+            Amount
+        </label>
+        <input type="hidden" name="auctionItemId" th:value="${auction.getId()}">
+        <input type="number" name="amount" id="amount">
+        <input type="submit" value="Bid">
+    </form>
+</body>
+</html>
